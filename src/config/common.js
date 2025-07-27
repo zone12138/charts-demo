@@ -61,6 +61,33 @@ export const getCommonLineTooltip = (theme) => {
 };
 
 /**
+ * 隐藏x轴和y轴的线
+ */
+export const axisLineHide = {
+  axisLine: {
+    show: false,
+  },
+}
+
+/**
+ * 隐藏x轴和y轴的刻度
+ */
+export const axisTickHide = {
+  axisTick: {
+    show: false,
+  },
+}
+
+/**
+ * 隐藏x轴和y轴的网格线
+ */
+export const splitLineHide = {
+  splitLine: {
+    show: false,
+  },
+}
+
+/**
  * item无事件（无鼠标交互效果，即无移入高亮，无tooltip展示）
  */
 export const itemNoneEvent = {

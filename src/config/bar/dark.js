@@ -1,29 +1,26 @@
 import * as com from "../common";
-const dataset = {
-  source: [
-    ["", "营业额"],
-    ["星期一", 2500],
-    ["星期二", 8000],
-    ["星期三", 3000],
-    ["星期四", 4000],
-    ["星期五", 1000],
-    ["星期六", 5000],
-    ["星期日", 7000],
-  ],
-};
-const dataset_mult = {
-  source: [
-    ["xName", "A", "B", "C", "D"],
-    ["星期一", 2500, 1000, 3000, 2600],
-    ["星期二", 8000, 1000, 3000, 2600],
-    ["星期三", 3000, 1000, 3000, 2600],
-    ["星期四", 4000, 1000, 3000, 2600],
-    ["星期五", 1000, 1000, 3000, 2600],
-    ["星期六", 5000, 1000, 3000, 2600],
-    ["星期日", 7000, 1000, 3000, 2600],
-  ],
-};
+const dataset = [
+  ["", "营业额"],
+  ["星期一", 2500],
+  ["星期二", 8000],
+  ["星期三", 3000],
+  ["星期四", 4000],
+  ["星期五", 1000],
+  ["星期六", 5000],
+  ["星期日", 7000],
+];
+const dataset_mult = [
+  ["xName", "A", "B", "C", "D"],
+  ["星期一", 2500, 1000, 3000, 2600],
+  ["星期二", 8000, 1000, 3000, 2600],
+  ["星期三", 3000, 1000, 3000, 2600],
+  ["星期四", 4000, 1000, 3000, 2600],
+  ["星期五", 1000, 1000, 3000, 2600],
+  ["星期六", 5000, 1000, 3000, 2600],
+  ["星期日", 7000, 1000, 3000, 2600],
+];
 const theme = "dark";
+const type = "bar"
 
 export default {
   "b_sgl_com--d": {
@@ -73,7 +70,7 @@ export default {
           barMaxWidth: "35%",
           itemStyle: {
             borderColor: "transparent",
-            borderWidth: 10,
+            borderWidth: 8,
           },
           showBackground: true,
           backgroundStyle: {
@@ -84,6 +81,7 @@ export default {
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "柱状图单色深底(普通)",
@@ -895,7 +893,7 @@ export default {
             color: "#FFFFFF",
           },
           itemStyle: {
-            borderColor: '#6694EC'
+            borderColor: "#6694EC",
           },
           stack: "总量",
         },
@@ -907,7 +905,7 @@ export default {
             color: "#FFFFFF",
           },
           itemStyle: {
-            borderColor: '#A4FBA8'
+            borderColor: "#A4FBA8",
           },
           stack: "总量",
         },
@@ -919,7 +917,7 @@ export default {
             color: "#FFFFFF",
           },
           itemStyle: {
-            borderColor: '#36D8D6'
+            borderColor: "#36D8D6",
           },
           stack: "总量",
         },

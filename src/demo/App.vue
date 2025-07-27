@@ -21,8 +21,8 @@ export default {
     return {
       configs: defaultConfig,
       // typeArr: ['b_mult_gap--d--test'],
-      typeArr: ["lf_com3--l"],
-      // typeArr: [],
+      // typeArr: ["lf_com3--l"],
+      typeArr: ['b_sgl_prog--l'],
       dataset: null,
       color: null,
     };
@@ -30,7 +30,7 @@ export default {
   mounted() {
     // this.typeArr = Object.keys(this.configs);
     this.color = ["#ff00ff"];
-    this.dataset = [0.5, 0.5, 0.5];
+    // this.dataset = [0.5, 0.5, 0.5];
   },
   methods: {
     commonMethod() {},

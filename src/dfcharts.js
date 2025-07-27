@@ -78,6 +78,8 @@ export default defineComponent({
         Log.warning("option配置为空，无法初始化图表");
         return;
       }
+
+      console.log("opt", opt);
       init(opt);
     });
 

@@ -1,5 +1,5 @@
 const req = require.context(
-  "./liquidfill", // 从当前目录开始查找
+  "./bar", // 从当前目录开始查找
   true, // 递归查找子目录
   /^(?!\.\/(index|common)\.js$).*\.js$/
 );

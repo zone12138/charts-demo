@@ -43,8 +43,22 @@ export function useSortOpts(config, color, dataset = [[]]) {
       }
 
       // 计算最大值（用于特殊处理背景）
-      if (!isEmpty(needCalcMax)) {
-        console.log("needCalcMax", needCalcMax);
+      if (needCalcMax) {
+        let len = dataset?.length;
+        const list = [];
+        while (len >= 2) {
+          list.push(...(dataset[len - 1]?.slice(1) ?? []));
+          len--;
+        }
+        const max = Math.max(...list);
+        if (!Number.isFinite(max)) {
+          Log.warning("数据集最大值不是有限数", "总数据：", list, "最大值：", max);
+          return;
+        }
+        dataset.forEach((item, index) => {
+          const len = item.length;
+          item[len] = index === 0 ? '' : max;
+        });
       }
 
       // 计算总和（用作另一侧的Y轴的显示值）
