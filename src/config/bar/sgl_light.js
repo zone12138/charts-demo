@@ -20,6 +20,78 @@ const tooltip = com.getCommonBarTooltip();
 const grid = com.getCommonGrid();
 
 export default {
+  "b_sgl_com--l": {
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color)) {
+        color = ["#3E88FF"];
+      }
+      return {
+        tooltip,
+        grid,
+        xAxis: {
+          type: "category",
+          ...com.axisLineHide,
+          ...com.axisTickHide,
+          ...com.splitLineHide,
+        },
+        yAxis: {
+          type: "value",
+          ...com.axisLineHide,
+          ...com.axisTickHide,
+        },
+        color,
+        series: [
+          {
+            type: "bar",
+            barMaxWidth: "25%",
+            itemStyle: {
+              borderRadius: 1,
+            },
+          },
+        ],
+      };
+    },
+    type,
+    theme,
+    dataset,
+    desc: "柱状图单数据浅底(普通)",
+  },
+  "b_sgl_com2--l": {
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color)) {
+        color = [com.getCommonLinearT2B("#7BE3D9", "#00BCAA")];
+      }
+      return {
+        tooltip,
+        grid,
+        xAxis: {
+          type: "category",
+          ...com.axisLineHide,
+          ...com.axisTickHide,
+          ...com.splitLineHide,
+        },
+        yAxis: {
+          type: "value",
+          ...com.axisLineHide,
+          ...com.axisTickHide,
+        },
+        color,
+        series: [
+          {
+            type: "bar",
+            barMaxWidth: "20%",
+            itemStyle: {
+              borderRadius: 8,
+            },
+          },
+        ],
+      };
+    },
+    type,
+    theme,
+    dataset,
+    desc: "柱状图单数据浅底(普通2)",
+  },
   "b_sgl_hill--l": {
     option: (color) => {
       if (isEmpty(color) || !Array.isArray(color)) {
@@ -84,8 +156,8 @@ export default {
             type: "scatter",
             symbol: "pin",
             symbolSize: (value) => {
-              const len = String(value[1] ?? 0).length
-              return 13 * len
+              const len = String(value[1] ?? 0).length;
+              return 13 * len;
             },
             ...com.itemNoneEvent,
             encode: { y: 1 },
@@ -104,7 +176,7 @@ export default {
     type,
     theme,
     dataset,
-    desc: "柱状图单色浅底(峰状)",
+    desc: "柱状图单数据浅底(峰状)",
   },
   "b_sgl_prog--l": {
     option: (color) => {
@@ -158,7 +230,7 @@ export default {
     type,
     theme,
     dataset,
-    desc: "柱状图单色浅底(进度条)",
+    desc: "柱状图单数据浅底(进度条)",
     needCalcMax,
   },
 };

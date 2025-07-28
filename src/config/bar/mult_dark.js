@@ -214,7 +214,7 @@ export default {
     dataset,
     theme,
     isMult,
-    desc: "柱状图多色数据深底(堆叠+横向)",
+    desc: "柱状图多数据数据深底(堆叠+横向)",
   },
   "b_mult_stack_hrz2--d": {
     option: (color) => {
