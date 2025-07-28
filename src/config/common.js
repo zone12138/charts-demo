@@ -214,6 +214,19 @@ export const getCommonLinearL2R = (Lc, Rc) => {
 };
 
 /**
+ * 折线图通用Symbol样式
+ */
+export const getCommonLineSymbol = {
+  symbol: "circle",
+  symbolSize: 10,
+  showSymbol: false,
+  itemStyle: {
+    borderColor: "#FFFFFF",
+    borderWidth: 3,
+  },
+}
+
+/**
  * 创建自定义系列（饼图外部装饰）
  * @param {*} params renderItem方法的回调参数
  * @param {*} api renderItem方法的回调参数

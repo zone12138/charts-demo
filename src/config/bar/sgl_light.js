@@ -2,19 +2,11 @@ import { isEmpty } from "lodash-es";
 import * as com from "../common";
 import { transformColorAlpha } from "@/utils/color";
 import { Log } from "@/utils";
+import { dataset_sgl as dataset } from "@/data/index";
 
 const theme = "light";
 const type = "bar";
-const dataset = [
-  ["", "营业额"],
-  ["星期一", 2500],
-  ["星期二", 8000],
-  ["星期三", 1000],
-  ["星期四", 5000],
-  ["星期五", 7000],
-  ["星期六", 6000],
-  ["星期日", 3000],
-];
+
 const needCalcMax = true;
 const tooltip = com.getCommonBarTooltip();
 const grid = com.getCommonGrid();

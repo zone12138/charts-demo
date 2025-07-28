@@ -1,230 +1,116 @@
+import { isEmpty } from "lodash-es";
 import * as com from "../common";
+import { dataset_sgl as dataset } from "@/data/index";
+import { transformColorAlpha } from "@/utils/color";
 const theme = "dark";
-const dataset = {
-  source: [
-    ["", "营业额"],
-    ["星期一", 2500],
-    ["星期二", 8000],
-    ["星期三", 3000],
-    ["星期四", 4000],
-    ["星期五", 1000],
-    ["星期六", 5000],
-    ["星期日", 7000],
-  ],
-};
-const dataset_mult = {
-  source: [
-    ["xName", "A", "B", "C", "D"],
-    ["星期一", 2500, 1000, 3000, 6000],
-    ["星期二", 8000, 7000, 4000, 3600],
-    ["星期三", 3000, 4000, 2000, 5600],
-    ["星期四", 4000, 6000, 6000, 3600],
-    ["星期五", 1000, 2000, 8000, 2600],
-    ["星期六", 5000, 4000, 1000, 7600],
-    ["星期日", 7000, 3000, 3000, 2600],
-  ],
-};
+const type = "line";
+
+const tooltip = com.getCommonLineTooltip("d");
+const grid = com.getCommonGrid();
+
+const dataset_mult = [
+  ["xName", "A", "B", "C", "D"],
+  ["星期一", 2500, 1000, 3000, 6000],
+  ["星期二", 8000, 7000, 4000, 3600],
+  ["星期三", 3000, 4000, 2000, 5600],
+  ["星期四", 4000, 6000, 6000, 3600],
+  ["星期五", 1000, 2000, 8000, 2600],
+  ["星期六", 5000, 4000, 1000, 7600],
+  ["星期日", 7000, 3000, 3000, 2600],
+];
 export default {
-  "l_sgl--d": {
-    option: {
-      tooltip: com.getCommonLineTooltip("d"),
-      textStyle: {
-        color: "#D3DBE2",
-      },
-      xAxis: {
-        type: "category",
-        splitLine: {
-          show: false,
+  "l_sgl_com--d": {
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color)) color = ["#3C91F6"];
+
+      return {
+        tooltip,
+        grid,
+        xAxis: {
+          type: "category",
+          ...com.axisLabelShow("#D3DBE2"),
+          ...com.splitLineHide,
+          ...com.axisLineHide,
+          ...com.axisTickHide,
         },
-        axisLine: {
-          show: false,
+        yAxis: {
+          type: "value",
+          ...com.splitLineShow("#74939D36", "dashed"),
+          ...com.axisLineHide,
+          ...com.axisTickHide,
         },
-        axisTick: {
-          show: false,
-        },
-      },
-      grid: com.getCommonGrid(),
-      yAxis: {
-        type: "value",
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          lineStyle: {
-            color: "#74939D36",
-            type: "dashed",
+        color,
+        series: [
+          {
+            type: "line",
+            symbol: "circle",
+            symbolSize: 10,
+            showSymbol: false,
+            itemStyle: {
+              borderColor: "#FFFFFF",
+              borderWidth: 3,
+            },
+            areaStyle: {},
           },
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      color: ["#3C91F6"],
-      series: [
-        {
-          type: "line",
-          symbol: "circle",
-          symbolSize: 10,
-          showSymbol: false,
-          itemStyle: {
-            borderColor: "#FFFFFF",
-            borderWidth: 3,
-          },
-          areaStyle: {
-            color: com.getCommonLinearT2B4Line("#3C91F6"),
-          },
-        },
-      ],
+        ],
+      };
     },
+    type,
     dataset,
     theme,
-    desc: "折线图单色深底",
+    desc: "折线图单数据深底(普通)",
   },
-  "l_sgl2--d": {
-    option: {
-      tooltip: com.getCommonLineTooltip("d"),
-      textStyle: {
-        color: "#D3DBE2",
-      },
-      xAxis: {
-        type: "category",
-        boundaryGap: false,
-        splitLine: {
-          show: false,
+  "l_sgl_guide--d": {
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color)) color = ["#CE9417"];
+      return {
+        tooltip,
+        grid: {
+          ...grid,
+          top: "12%",
         },
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          margin: 16,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      grid: {
-        ...com.getCommonGrid(),
-        top: "12%",
-      },
-      yAxis: {
-        type: "value",
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          lineStyle: {
-            color: "#74939D36",
-            type: "dashed",
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          axisLabel: {
+            margin: 16,
+            color: "#D3DBE2",
           },
+          ...com.axisLineHide,
+          ...com.splitLineHide,
+          ...com.axisTickHide,
         },
-        axisTick: {
-          show: false,
+        yAxis: {
+          type: "value",
+          ...com.axisLabelShow("#D3DBE2"),
+          ...com.splitLineShow("#74939D36", "dashed"),
+          ...com.axisLineHide,
+          ...com.axisTickHide,
         },
-      },
-      color: ["#CE9417"],
-      series: [
-        {
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 8,
-          label: { show: true, color: "inherit" },
-        },
-        {
-          type: "bar",
-          barWidth: 1,
-          itemStyle: {
-            color: "#707070",
+        color,
+        series: [
+          {
+            type: "line",
+            smooth: true,
+            symbol: "circle",
+            symbolSize: 8,
+            label: { show: true, color: "inherit" },
           },
-          tooltip: { show: false },
-          emphasis: { disabled: true },
-        },
-      ],
+          {
+            type: "bar",
+            barWidth: 1,
+            itemStyle: {
+              color: transformColorAlpha(color[0], 0.3),
+            },
+            ...com.itemNoneEvent,
+          },
+        ],
+      };
     },
+    type,
     dataset,
     theme,
-    desc: "折线图单色深底(带纵向指引线)",
-  },
-  "l_mult--d": {
-    option: {
-      tooltip: com.getCommonLineTooltip("d"),
-      legend: {
-        right: "4%",
-        symbol: "circle",
-        itemHeight: 14,
-        itemWidth: 14,
-        textStyle: {
-          color: "#89A0CE",
-        },
-      },
-      textStyle: {
-        color: "#D3DBE2",
-      },
-      xAxis: {
-        type: "category",
-        splitLine: {
-          show: false,
-        },
-        splitArea: {
-          show: true,
-          areaStyle: {
-            color: ["#63C9F616", "transparent"],
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      grid: {
-        ...com.getCommonGrid(),
-        top: "12%",
-      },
-      yAxis: {
-        type: "value",
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          lineStyle: {
-            color: "#376E8F",
-          },
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      color: ["#02C4D2", "#FF8629"],
-      series: [
-        {
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 10,
-          showSymbol: false,
-          itemStyle: {
-            borderColor: "#FFFFFF",
-            borderWidth: 3,
-          },
-        },
-        {
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 10,
-          showSymbol: false,
-          itemStyle: {
-            borderColor: "#FFFFFF",
-            borderWidth: 3,
-          },
-        },
-      ],
-    },
-    dataset: dataset_mult,
-    theme,
-    desc: "折线图多色深底(X轴斑马纹)",
+    desc: "折线图单数据深底(带纵向指引线)",
   },
   "l_mult_withdashed--d": {
     option: {

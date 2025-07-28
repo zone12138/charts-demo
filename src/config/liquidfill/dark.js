@@ -2,10 +2,10 @@ import { isEmpty } from "lodash-es";
 import * as com from "../common";
 import { transformColorAlpha } from "@/utils/color";
 import { item4lf, item4lf2 } from "@/utils/renderItem";
+import { dataset_lf as dataset } from "@/data/index";
 
 const theme = "dark";
 const type = "liquidFill";
-const dataset = [[0.56, 0.56, 0.56]];
 
 export default {
   "lf_com--d": {

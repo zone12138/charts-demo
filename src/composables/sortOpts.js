@@ -1,5 +1,5 @@
-import { isEmpty } from "lodash-es";
 import { Log } from "../utils";
+import { getCommonLinearT2B4Line as linear } from "@/config/common";
 const TYPE_LIQUIDFILL = "liquidFill";
 const TYPE_PIE = "pie";
 const TYPE_LINE = "line";
@@ -14,7 +14,7 @@ const TYPE_BAR = "bar";
  */
 export function useSortOpts(config, color, dataset = [[]]) {
   try {
-    let { option, needCalcMax, needCalcTotal, type, isMult } = config;
+    let { option, needCalcMax, type, isMult } = config;
     if (typeof option === "function") {
       option = option(color);
 
@@ -28,10 +28,21 @@ export function useSortOpts(config, color, dataset = [[]]) {
           option.series = [...option.series, ...initialSeries];
           len -= initialSeriesLen;
         }
+        const hasStack = option.series.some((item) => "stack" in item);
         // 排序（主要用于堆叠）
-        option.series = option.series.sort((a, b) => {
-          return String(a.stack).localeCompare(String(b.stack));
-        })
+        if (hasStack) {
+          option.series = option.series.sort((a, b) => {
+            return String(a.stack).localeCompare(String(b.stack));
+          });
+        }
+      }
+
+      if (type === TYPE_LINE) {
+        option.series.forEach((item, index) => {
+          if ("areaStyle" in item) {
+            item.areaStyle.color = linear(option.color[index] ?? "#ff0000");
+          }
+        });
       }
 
       // 特殊处理水球图（因为水球图是非官方的，data是直接设置在series上的，无法使用dataset属性进行映射）
@@ -57,23 +68,25 @@ export function useSortOpts(config, color, dataset = [[]]) {
         }
         const max = Math.max(...list);
         if (!Number.isFinite(max)) {
-          Log.warning("数据集最大值不是有限数", "总数据：", list, "最大值：", max);
+          Log.warning(
+            "数据集最大值不是有限数",
+            "总数据：",
+            list,
+            "最大值：",
+            max
+          );
           return;
         }
         dataset.forEach((item, index) => {
           const len = item.length;
-          item[len] = index === 0 ? '' : max;
+          item[len] = index === 0 ? "" : max;
         });
-      }
-
-      // 计算总和（用作另一侧的Y轴的显示值）
-      if (!isEmpty(needCalcTotal)) {
-        console.log("needCalcTotal", needCalcTotal);
       }
     }
 
     return { ...option, dataset: { source: dataset } };
   } catch (error) {
     Log.error("useSortOpts error", error.message);
+    return { title: { text: "出错啦！！！", subtext: error.message, textStyle: { color: "#f00" }, left: "center", top: "center" } };
   }
 }

@@ -1,29 +1,11 @@
 import { isEmpty } from "lodash-es";
 import * as com from "../common";
+import { dataset_mult_less as dataset_less } from "@/data/index";
 
 const theme = "light"; // 主题（dark/light）
 const type = "bar"; // 图表类型（bar/line/pie/liquidFill）
 const isMult = true; // 是否多数据（主要用在柱状图和折线图）
-const dataset_less = [
-  ["营业额", "零食", "饮料"],
-  ["星期一", 2500, 1000],
-  ["星期二", 8000, 1000],
-  ["星期三", 3000, 1000],
-  ["星期四", 4000, 1000],
-  ["星期五", 1000, 1000],
-  ["星期六", 5000, 1000],
-  ["星期日", 7000, 1000],
-];
-const dataset = [
-  ["营业额", "零食", "饮料", "水果生鲜", "日常用品"],
-  ["星期一", 2500, 1000, 3000, 2600],
-  ["星期二", 8000, 1000, 3000, 2600],
-  ["星期三", 3000, 1000, 3000, 2600],
-  ["星期四", 4000, 1000, 3000, 2600],
-  ["星期五", 1000, 1000, 3000, 2600],
-  ["星期六", 5000, 1000, 3000, 2600],
-  ["星期日", 7000, 1000, 3000, 2600],
-];
+
 const tooltip = com.getCommonBarTooltip();
 const legend = com.getCommonBarLegend();
 const grid = com.getCommonGrid();
@@ -57,10 +39,28 @@ export default {
           {
             type: "bar",
             barMaxWidth: "25%",
-            itemStyle: {
-              decal: {
-                symbol: "roundRect",
-              },
+            renderItem: function (params, api) {
+              console.log("==========")
+              var categoryIndex = api.value(0);
+              var start = api.coord([api.value(0), 0]);
+              var end = api.coord([api.value(0), api.value(1)]);
+              var height = end[1] - start[1];
+
+              // 创建梯形
+              var shape = {
+                type: "polygon",
+                shape: {
+                  points: [
+                    [start[0] - 10, start[1]],
+                    [start[0] + 10, start[1]],
+                    [end[0] + 5, end[1]],
+                    [end[0] - 5, end[1]],
+                  ],
+                },
+                style: api.style(),
+              };
+
+              return shape;
             },
           },
         ],
