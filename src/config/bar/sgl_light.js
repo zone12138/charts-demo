@@ -2,6 +2,7 @@ import * as com from "../common";
 import { Log } from "@/utils";
 
 const theme = "light";
+const type = "bar";
 const dataset = [
   ["", "营业额"],
   ["星期一", 2500],
@@ -12,20 +13,18 @@ const dataset = [
   ["星期六", 6000],
   ["星期日", 3000],
 ];
-const type = "bar";
 const needCalcMax = true;
 
 export default {
   "b_sgl_prog--l": {
     option: (color) => {
-      if (!Array.isArray(color) || color.length !== 2) {
+      if (!Array.isArray(color) || color.length < 2) {
         Log.warning(
           "传递颜色值不是数组或者数组长度小于2，将忽略传递值，使用默认的颜色"
         );
         color = ["#349bff", "#e8eaeb"];
       }
       return {
-        backgroundColor: "transparent",
         tooltip: com.getCommonBarTooltip(),
         xAxis: {
           type: "category",

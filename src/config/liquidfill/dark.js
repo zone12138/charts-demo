@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash-es";
 import * as com from "../common";
-import { transformColorAlpha } from "../../utils/color";
-import { item4lf, item4lf2 } from "../../utils/renderItem";
+import { transformColorAlpha } from "@/utils/color";
+import { item4lf, item4lf2 } from "@/utils/renderItem";
 
 const theme = "dark";
 const type = "liquidFill";

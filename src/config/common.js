@@ -30,6 +30,19 @@ export const getCommonBarTooltip = (theme) => {
 };
 
 /**
+ * 柱状图通用Legend样式
+ * @param {string} theme 主题
+ */
+export const getCommonBarLegend = (theme) => {
+  return {
+    right: "4%",
+    itemHeight: 10,
+    itemWidth: 10,
+    textStyle: { color: theme === "d" ? "#CAD3E5" : "#333333" },
+  };
+};
+
+/**
  * 饼图通用Tooltip样式
  * @param {string} theme 主题
  */
@@ -67,7 +80,30 @@ export const axisLineHide = {
   axisLine: {
     show: false,
   },
+};
+
+/**
+ * 显示x轴和y轴的线
+ * @param {string} color 颜色
+ */
+export const axisLineShow = (color) => ({
+  axisLine: { show: true, lineStyle: { color } },
+});
+
+/**
+ * 隐藏x轴和y轴的标签
+ */
+export const axisLabelHide = {
+  axisLabel: {
+    show: false,
+  },
 }
+
+/**
+ * 显示x轴和y轴的标签
+ * @param {string} color 颜色
+ */
+export const axisLabelShow = (color) => ({ axisLabel: { color } });
 
 /**
  * 隐藏x轴和y轴的刻度
@@ -76,7 +112,7 @@ export const axisTickHide = {
   axisTick: {
     show: false,
   },
-}
+};
 
 /**
  * 隐藏x轴和y轴的网格线
@@ -85,7 +121,21 @@ export const splitLineHide = {
   splitLine: {
     show: false,
   },
-}
+};
+
+/**
+ * 显示x轴和y轴的网格线
+ * @param {string} color 颜色
+ * @param {string} type 类型
+ */
+export const splitLineShow = (color, type = "solid") => ({
+  splitLine: {
+    lineStyle: {
+      color,
+      type,
+    },
+  },
+});
 
 /**
  * item无事件（无鼠标交互效果，即无移入高亮，无tooltip展示）
@@ -98,9 +148,9 @@ export const itemNoneEvent = {
     disabled: true,
   },
   tooltip: {
-    show: false
-  }
-}
+    show: false,
+  },
+};
 
 /**
  * 创建渐变色（从上到下）

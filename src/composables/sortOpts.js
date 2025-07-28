@@ -22,11 +22,16 @@ export function useSortOpts(config, color, dataset = [[]]) {
       if ((type === TYPE_LINE || type === TYPE_BAR) && isMult) {
         let len = dataset[0]?.length;
         const initialSeries = [...option.series];
-        // 当数据集长度大于2时，即多组数据时，需要复制series（一般都是柱状图和折线图）
-        while (len > 2) {
+        const initialSeriesLen = initialSeries.length;
+        // 当数据集长度大于初始series长度+1（因为第一列是x轴的数据，所以要加1）时，即多组数据时，需要复制series（一般都是柱状图和折线图）
+        while (len > initialSeriesLen + 1) {
           option.series = [...option.series, ...initialSeries];
-          len--;
+          len -= initialSeriesLen;
         }
+        // 排序（主要用于堆叠）
+        option.series = option.series.sort((a, b) => {
+          return String(a.stack).localeCompare(String(b.stack));
+        })
       }
 
       // 特殊处理水球图（因为水球图是非官方的，data是直接设置在series上的，无法使用dataset属性进行映射）

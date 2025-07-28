@@ -22,14 +22,14 @@ export default {
       configs: defaultConfig,
       // typeArr: ['b_mult_gap--d--test'],
       // typeArr: ["lf_com3--l"],
-      typeArr: ['b_sgl_prog--l'],
+      typeArr: [],
       dataset: null,
       color: null,
     };
   },
   mounted() {
-    // this.typeArr = Object.keys(this.configs);
-    this.color = ["#ff00ff"];
+    this.typeArr = Object.keys(this.configs);
+    // this.color = ["#ff00ff", "#ff0000"];
     // this.dataset = [0.5, 0.5, 0.5];
   },
   methods: {
@@ -43,7 +43,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   height: 100%;
   width: 100%;
