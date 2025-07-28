@@ -1,7 +1,7 @@
-import { transformColorAlpha } from "@/utils/color";
-import * as com from "../common";
-import { Log } from "@/utils";
 import { isEmpty } from "lodash-es";
+import * as com from "../common";
+import { transformColorAlpha } from "@/utils/color";
+import { Log } from "@/utils";
 
 const theme = "light";
 const type = "bar";
