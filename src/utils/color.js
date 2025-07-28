@@ -17,7 +17,7 @@ export function transformColorAlpha(color, opacity = 1) {
   if (/^#([0-9A-Fa-f]{3}){1,2}$/.test(color)) {
     if (color.length === 4) {
       color = color.replace(/^#/, "");
-      color = "#" + color.split("").map((item) => item + item).join("");
+      color = "#" + color.split("").map((v) => v + v).join("");
     }
     const hexAlpha = Math.round(opacity * 255).toString(16).padStart(2, "0");
     return `${color}${hexAlpha}`;
