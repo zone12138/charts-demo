@@ -97,7 +97,7 @@ export default defineComponent({
     const getTemplateOption = () =>
       typeof defaultConfig?.option === "function"
         ? defaultConfig.option()
-        : defaultConfig.option;
+        : defaultConfig?.option;
 
     // 获取模板数据集
     const getTemplateDataset = () => defaultConfig.dataset;

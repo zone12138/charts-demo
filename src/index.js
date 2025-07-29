@@ -1,5 +1,5 @@
 import charts from './dfcharts';
-import './index.css'
+import '@/styles/index.css'
 
 const install = (app) => {
   app.component(charts.name, charts);
