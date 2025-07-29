@@ -30,9 +30,10 @@ export default defineComponent({
   },
   setup(props, { attrs }) {
     const { autoresize, option, dataset, colorList } = toRefs(props);
-    const { root, chart, nonEventAttrs, nativeListeners, setOption, init } = useChart(props, attrs);
+    const { root, chart, nonEventAttrs, nativeListeners, setOption, init } =
+      useChart(props, attrs);
     useAutoResize(root, chart, autoresize);
-    
+
     const watchDeep = { deep: true };
     // 监听option配置变化
     watch(
@@ -54,7 +55,13 @@ export default defineComponent({
           Log.warning("未使用type属性时，dataset和colorList属性将失效");
           return;
         }
-        setOption(useSortOpts(defaultConfig, toRaw(newcolorList), toRaw(newdataset) ?? defaultConfig.dataset));
+        setOption(
+          useSortOpts(
+            defaultConfig,
+            toRaw(newcolorList),
+            toRaw(newdataset) ?? defaultConfig.dataset
+          )
+        );
       },
       watchDeep
     );
@@ -67,7 +74,11 @@ export default defineComponent({
         if (config) {
           const { dataset } = config;
           defaultConfig = config;
-          opt = useSortOpts(defaultConfig, props.colorList, props.dataset ?? dataset);
+          opt = useSortOpts(
+            defaultConfig,
+            props.colorList,
+            props.dataset ?? dataset
+          );
         } else {
           Log.info(`未找到type为${props.type}的配置，将使用props.option配置`);
         }
@@ -82,12 +93,23 @@ export default defineComponent({
       init(opt);
     });
 
+    // 获取模板配置
+    const getTemplateOption = () =>
+      typeof defaultConfig?.option === "function"
+        ? defaultConfig.option()
+        : defaultConfig.option;
+
+    // 获取模板数据集
+    const getTemplateDataset = () => defaultConfig.dataset;
+
     return {
       setOption,
       chart,
       root,
       nonEventAttrs,
       nativeListeners,
+      getTemplateOption,
+      getTemplateDataset,
     };
   },
   render() {

@@ -127,3 +127,37 @@ export const item4lf2 = (params, api, color) => {
     ],
   };
 };
+
+/**
+ * 创建自定义系列（饼图外部装饰）
+ * @param {*} params renderItem方法的回调参数
+ * @param {*} api renderItem方法的回调参数
+ */
+export const item4Pie = (params, api) => {
+  const color = "#6AA4FF7D";
+  let x0 = api.getWidth() / 2;
+  let y0 = api.getHeight() / 2;
+  let r = Math.min(x0, y0) * 0.65;
+  return {
+    type: "group",
+    children: [
+      {
+        type: "arc",
+        shape: {
+          cx: x0,
+          cy: y0,
+          r,
+          startAngle: -0.5 * Math.PI,
+          endAngle: 1.5 * Math.PI,
+        },
+        style: {
+          stroke: color,
+          lineDash: [3, 3],
+          fill: "transparent",
+          lineWidth: 1,
+        },
+        silent: true,
+      },
+    ],
+  };
+};

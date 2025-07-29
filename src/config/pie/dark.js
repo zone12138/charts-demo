@@ -1,5 +1,6 @@
 import { isEmpty } from "lodash-es";
 import * as com from "../common";
+import { item4Pie } from "@/utils/renderItem";
 import { dataset_sgl as dataset } from "@/data/index";
 
 const theme = "dark";
@@ -7,6 +8,7 @@ const type = "pie";
 
 const legend = com.getCommonPieLegend("d");
 const legend_r = com.getCommonPieLegend("d", "r");
+const grid = com.getCommonGrid();
 
 const dataset_percent = [
   ["", "营业额"],
@@ -109,62 +111,66 @@ export default {
     desc: "饼图深底(带背景圆环图)",
   },
   "p_ring_gap--d": {
-    option: {
-      tooltip,
-      legend,
-      color: ["#1D83FA", "#1EE7E7", "#E78C46", "#886EFF", "#FFC722"],
-      series: [
-        {
-          type: "pie",
-          radius: ["35%", "51%"],
-          label: {
-            show: false,
-            rich: {
-              val: {
-                color: "#FFFFFF",
-                fontSize: 20,
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color))
+        color = ["#1D83FA", "#1EE7E7", "#E78C46", "#886EFF", "#FFC722"];
+      return {
+        tooltip,
+        legend,
+        color,
+        series: [
+          {
+            type: "pie",
+            radius: ["35%", "51%"],
+            label: {
+              show: false,
+              rich: {
+                val: {
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                },
+              },
+              color: "#BAC3D4",
+              formatter: "{b}\n{val| {@[1]}}",
+              position: "center",
+            },
+            padAngle: 5,
+            emphasis: {
+              label: {
+                show: true,
               },
             },
-            color: "#BAC3D4",
-            formatter: "{b}\n{val| {@[1]}}",
-            position: "center",
+            z: 10,
           },
-          padAngle: 5,
-          emphasis: {
-            label: {
-              show: true,
+          {
+            type: "pie",
+            radius: ["26%", "60%"],
+            itemStyle: {
+              color: "#122752",
             },
+            ...com.itemNoneEvent,
+            data: [0],
+            z: 5,
           },
-          z: 10,
-        },
-        {
-          type: "pie",
-          radius: ["26%", "60%"],
-          itemStyle: {
-            color: "#122752",
+          {
+            type: "pie",
+            radius: ["0%", "60%"],
+            itemStyle: {
+              color: "#081532",
+            },
+            ...com.itemNoneEvent,
+            data: [0],
+            z: 1,
           },
-          ...com.itemNoneEvent,
-          data: [0],
-          z: 5,
-        },
-        {
-          type: "pie",
-          radius: ["0%", "60%"],
-          itemStyle: {
-            color: "#081532",
+          {
+            name: "",
+            type: "custom",
+            coordinateSystem: "none",
+            renderItem: item4Pie,
+            data: [0],
           },
-          ...com.itemNoneEvent,
-          data: [0],
-          z: 1,
-        },
-        {
-          name: "",
-          type: "custom",
-          coordinateSystem: "none",
-          renderItem: com.renderItem4Pie,
-          data: [0],
-        },
-      ],
+        ],
+      };
     },
     type,
     dataset,
@@ -172,50 +178,55 @@ export default {
     desc: "饼图深底(有间距圆环图)",
   },
   "p_ring_shadow--d": {
-    option: {
-      tooltip,
-      legend,
-      color: [
-        "#3D77FF",
-        "#6AB4FF",
-        "#1DE8FF",
-        "#FF742C",
-        "#FF2C2C",
-        "#50FFB3",
-        "#FF2CFF",
-      ],
-      series: [
-        {
-          type: "pie",
-          radius: ["45%", "51%"],
-          label: {
-            show: false,
-            rich: {
-              val: {
-                color: "#FFFFFF",
-                fontSize: 20,
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color))
+        color = [
+          "#3D77FF",
+          "#6AB4FF",
+          "#1DE8FF",
+          "#FF742C",
+          "#FF2C2C",
+          "#50FFB3",
+          "#FF2CFF",
+        ];
+      return {
+        tooltip,
+        legend: legend_r,
+        color,
+        series: [
+          {
+            type: "pie",
+            radius: ["45%", "51%"],
+            label: {
+              show: false,
+              rich: {
+                val: {
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                },
+              },
+              color: "#FFFFFF",
+              formatter: "{b}\n{val| {@[1]}}",
+              position: "center",
+            },
+            emphasis: {
+              label: {
+                show: true,
               },
             },
-            formatter: "{b}\n{val| {@[1]}}",
-            position: "center",
+            z: 10,
           },
-          emphasis: {
-            label: {
-              show: true,
+          {
+            type: "pie",
+            radius: ["51%", "65%"],
+            itemStyle: {
+              opacity: 0.2,
             },
+            ...com.itemNoneEvent,
+            z: 5,
           },
-          z: 10,
-        },
-        {
-          type: "pie",
-          radius: ["51%", "65%"],
-          itemStyle: {
-            opacity: 0.2,
-          },
-          ...com.itemNoneEvent,
-          z: 5,
-        },
-      ],
+        ],
+      };
     },
     type,
     dataset,
@@ -223,38 +234,45 @@ export default {
     desc: "饼图深底(带阴影圆环图)",
   },
   "p_ring_shadow2--d": {
-    option: {
-      tooltip,
-      legend,
-      color: ["#37FFC9", "#FFE777", "#E78C46", "#886EFF", "#32A1FF"],
-      series: [
-        {
-          type: "pie",
-          radius: ["42%", "50%"],
-          padAngle: 6,
-          z: 10,
-        },
-        {
-          type: "pie",
-          radius: ["34%", "42%"],
-          itemStyle: {
-            opacity: 0.6,
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color))
+        color = ["#37FFC9", "#FFE777", "#E78C46", "#886EFF", "#32A1FF"];
+      return {
+        tooltip,
+        legend,
+        color,
+        series: [
+          {
+            type: "pie",
+            radius: ["42%", "50%"],
+            label: {
+              color: "#FFFFFF"
+            },
+            padAngle: 6,
+            z: 10,
           },
-          padAngle: 6,
-          ...com.itemNoneEvent,
-          z: 5,
-        },
-        {
-          type: "pie",
-          radius: ["26%", "34%"],
-          itemStyle: {
-            opacity: 0.3,
+          {
+            type: "pie",
+            radius: ["34%", "42%"],
+            itemStyle: {
+              opacity: 0.6,
+            },
+            padAngle: 6,
+            ...com.itemNoneEvent,
+            z: 5,
           },
-          padAngle: 6,
-          ...com.itemNoneEvent,
-          z: 5,
-        },
-      ],
+          {
+            type: "pie",
+            radius: ["26%", "34%"],
+            itemStyle: {
+              opacity: 0.3,
+            },
+            padAngle: 6,
+            ...com.itemNoneEvent,
+            z: 5,
+          },
+        ],
+      };
     },
     type,
     dataset,
@@ -302,6 +320,7 @@ export default {
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(带阴影圆环图3)",
@@ -316,18 +335,8 @@ export default {
           color: "#FFFFFF",
         },
       },
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        top: "center",
-        right: "5%",
-        itemGap: 16,
-        orient: "vertical",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
+      tooltip,
+      legend: legend_r,
       color: ["#FF5B00", "#FFA800", "#FFE000", "#006CED", "#00CFFF", "#00FFFF"],
       series: [
         {
@@ -402,13 +411,14 @@ export default {
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(带阴影圆环图4)",
   },
   "p_ring_percent--d": {
     option: {
-      grid: com.getCommonGrid(),
+      grid,
       angleAxis: {
         polarIndex: 0,
         min: 0,
@@ -419,15 +429,9 @@ export default {
       radiusAxis: {
         type: "category",
         show: true,
-        axisLabel: {
-          show: false,
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
+        ...com.axisLabelHide,
+        ...com.axisLineHide,
+        ...com.axisTickHide
       },
       polar: {
         center: ["50%", "50%"], //中心点位置
@@ -437,24 +441,25 @@ export default {
       series: [
         {
           type: "bar",
-          z: 10,
+          barMaxWidth: "10%", //大的占比环
+          coordinateSystem: "polar",
+          roundCap: true,
           showBackground: true,
           backgroundStyle: {
             color: "#1A3163",
           },
-          coordinateSystem: "polar",
-          roundCap: true,
-          barMaxWidth: "10%", //大的占比环
+          z: 10,
         },
       ],
     },
+    type,
     dataset: dataset_percent,
     theme,
     desc: "饼图(进度条圆环图)",
   },
   "p_ring_mult_percent--d": {
     option: {
-      grid: com.getCommonGrid(),
+      grid,
       legend: {
         orient: "vertical",
         top: "center",
@@ -476,15 +481,9 @@ export default {
       radiusAxis: {
         type: "category",
         show: true,
-        axisLabel: {
-          show: false,
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
+        ...com.axisLabelHide,
+        ...com.axisLineHide,
+        ...com.axisTickHide
       },
       polar: {
         center: ["50%", "50%"], //中心点位置
@@ -494,14 +493,14 @@ export default {
       series: [
         {
           type: "bar",
-          z: 10,
+          barMaxWidth: "5%", //大的占比环
+          coordinateSystem: "polar",
+          roundCap: true,
           showBackground: true,
           backgroundStyle: {
             color: "#1A3163",
           },
-          coordinateSystem: "polar",
-          roundCap: true,
-          barMaxWidth: "5%", //大的占比环
+          z: 10,
         },
         {
           type: "bar",
@@ -561,12 +560,11 @@ export default {
         },
       ],
     },
-    dataset: {
-      source: [
-        ["", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-        ["营业额", 50, 80, 30, 40, 50, 60],
-      ],
-    },
+    type,
+    dataset: [
+      ["", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+      ["营业额", 50, 80, 30, 40, 50, 60],
+    ],
     theme,
     desc: "饼图(多色进度条圆环图)",
   },
