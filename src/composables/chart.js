@@ -1,6 +1,6 @@
 import { getCurrentInstance, shallowRef, computed, nextTick } from "vue-demi";
 import { init as initChart } from "echarts/core";
-import { isOn, omitOn } from "../utils";
+import { isOn, omitOn } from "@/utils/index";
 const NATIVE_EVENT_RE = /(^&?~?!?)native:/;
 
 export function useChart(props, attrs) {
@@ -85,6 +85,8 @@ export function useChart(props, attrs) {
           target.off(event, handler);
         };
       }
+
+      target.on(event, handler);
     });
 
     // 调整画布尺寸
@@ -121,8 +123,8 @@ export function useChart(props, attrs) {
       // 数量发生变化时，需要手动触发clear，否则会导致残留上一次的图表
       // eg：
       // 上一次图表数据：[1]
-      // 下一次图表数据：[1, 2]
-      // 不触发clear，会导致残留上一次的图表数据[1, 1]
+      // 下一次图表数据：[2, 3]
+      // 不触发clear，会导致残留上一次的图表数据[1, 2]
       chart.value.clear();
       nextTick(() => {
         chart.value.setOption(option, opts || {});

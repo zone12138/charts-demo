@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash-es";
-import { Log } from "../utils";
+import { Log } from "@/utils/index";
 import { getCommonLinearT2B4Line as linear } from "@/config/common";
 const TYPE_LIQUIDFILL = "liquidFill";
 const TYPE_PIE = "pie";
@@ -49,6 +49,7 @@ export function useSortOpts(config, color, dataset = [[]]) {
             item.areaStyle.color = linear(color);
           }
           if (nameList?.[index]) {
+            // 根据系列名是否以"${虚线}"开头处理虚线
             if (String(nameList[index]).startsWith(TYPE_LINE_DASHED)) {
               dataset[0][index + 1] = String(nameList[index]).replace(
                 TYPE_LINE_DASHED,

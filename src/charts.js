@@ -12,8 +12,8 @@ import {
 } from "vue-demi";
 import { init as initChart, throttle } from "echarts/core";
 
-import { isOn, omitOn } from "./utils";
-import defaultConfig from "./config/index";
+import { isOn, omitOn } from "@/utils/index";
+import defaultConfig from "@/config/index";
 
 const NATIVE_EVENT_RE = /(^&?~?!?)native:/;
 const TAG_NAME = "dfe-echarts";

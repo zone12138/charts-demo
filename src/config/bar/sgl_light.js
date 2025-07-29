@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash-es";
 import * as com from "../common";
 import { transformColorAlpha } from "@/utils/color";
-import { Log } from "@/utils";
+import { Log } from "@/utils/index";
 import { dataset_sgl as dataset } from "@/data/index";
 
 const theme = "light";

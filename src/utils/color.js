@@ -1,4 +1,4 @@
-import { Log } from "@/utils"; 
+import { Log } from "@/utils/index"; 
 
 /**
  * 将透明度百分比转化为对应格式的颜色值

@@ -10,9 +10,9 @@ import {
 import { useAutoResize } from "./composables/autoResize";
 import { useChart } from "./composables/chart";
 import { useSortOpts } from "./composables/sortOpts";
-import allConfigs from "./config/index";
+import allConfigs from "@/config/index";
 import { isEmpty } from "lodash-es";
-import { Log } from "./utils";
+import { Log } from "@/utils/index";
 
 const TAG_NAME = "df-echarts";
 
