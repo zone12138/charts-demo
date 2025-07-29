@@ -1,5 +1,5 @@
 const req = require.context(
-  "./line", // 从当前目录开始查找
+  "./pie", // 从当前目录开始查找
   true, // 递归查找子目录
   /^(?!\.\/(index|common)\.js$).*\.js$/
 );

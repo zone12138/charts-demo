@@ -43,6 +43,23 @@ export const getCommonBarLegend = (theme) => {
 };
 
 /**
+ * 折线图通用Tooltip样式
+ * @param {string} theme 主题
+ */
+export const getCommonLineTooltip = (theme) => {
+  return {
+    trigger: "axis",
+    ...(theme === "d"
+      ? {
+          backgroundColor: "#142349",
+          borderWidth: 0,
+          textStyle: { color: "#FFFFFF" },
+        }
+      : {}),
+  };
+};
+
+/**
  * 折线图通用Legend样式
  * @param {string} theme 主题
  */
@@ -70,19 +87,16 @@ export const getCommonPieTooltip = (theme) => {
 };
 
 /**
- * 折线图通用Tooltip样式
+ * 饼图通用Legend样式
  * @param {string} theme 主题
+ * @param {string} position 位置
  */
-export const getCommonLineTooltip = (theme) => {
+export const getCommonPieLegend = (theme, position) => {
   return {
-    trigger: "axis",
-    ...(theme === "d"
-      ? {
-          backgroundColor: "#142349",
-          borderWidth: 0,
-          textStyle: { color: "#FFFFFF" },
-        }
-      : {}),
+    ...(position === "r" ? { right: "4%", top: "center", orient: "vertical" } : { bottom: "4%" }),
+    itemHeight: 10,
+    itemWidth: 10,
+    textStyle: { color: theme === "d" ? "#CAD3E5" : "#333333" },
   };
 };
 

@@ -1,142 +1,122 @@
+import { isEmpty } from "lodash-es";
 import * as com from "../common";
+import { dataset_sgl as dataset } from "@/data/index";
 
 const theme = "dark";
-const dataset = {
-  source: [
-    ["", "营业额"],
-    ["星期一", 2500],
-    ["星期二", 8000],
-    ["星期三", 3000],
-    ["星期四", 4000],
-    ["星期五", 5000],
-  ],
-};
-const dataset_percent = {
-  source: [
-    ["", "营业额"],
-    ["星期一", 80],
-  ],
-};
+const type = "pie";
+
+const legend = com.getCommonPieLegend("d");
+const legend_r = com.getCommonPieLegend("d", "r");
+
+const dataset_percent = [
+  ["", "营业额"],
+  ["星期一", 80],
+];
+
+const tooltip = com.getCommonPieTooltip("d");
 
 export default {
   "p_ring--d": {
-    option: {
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        bottom: "5%",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
-      color: ["#2B5ADE", "#C5D6F3", "#62C664", "#DDAF61", "#35C9C6"],
-      series: [
-        {
-          type: "pie",
-          label: {
-            show: false,
-            rich: {
-              val: {
-                color: "#FC8E0C",
-                fontSize: 20,
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color))
+        color = [
+          "#2B5ADE",
+          "#C5D6F3",
+          "#62C664",
+          "#DDAF61",
+          "#35C9C6",
+          "#FF2C2C",
+          "#FFC72C",
+        ];
+      return {
+        tooltip,
+        legend,
+        color,
+        series: [
+          {
+            type: "pie",
+            radius: ["35%", "51%"],
+            label: {
+              show: false,
+              rich: {
+                val: {
+                  color: "#FC8E0C",
+                  fontSize: 20,
+                },
+              },
+              color: "#FFFFFF",
+              formatter: "{b}\n{val| {@[1]}}",
+              position: "center",
+            },
+            emphasis: {
+              label: {
+                show: true,
               },
             },
-            formatter: "{b}\n{val| {@[1]}}",
-            position: "center",
           },
-          emphasis: {
-            label: {
-              show: true,
+          {
+            type: "pie",
+            radius: ["59%", "59.5%"],
+            itemStyle: {
+              color: "#334866",
             },
+            ...com.itemNoneEvent,
+            data: [0],
           },
-          radius: ["35%", "51%"],
-        },
-        {
-          type: "pie",
-          label: {
-            show: false,
-          },
-          itemStyle: {
-            color: "#334866",
-          },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
-          data: [1],
-          radius: ["59%", "59.5%"],
-        },
-      ],
+        ],
+      };
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(圆环图)",
   },
   "p_ring_widthbg--d": {
-    option: {
-      title: {
-        text: "{val|21}\n{label|总数}",
-        top: "center",
-        left: "center",
-        textStyle: {
-          rich: {
-            val: {
-              fontSize: 24,
-            },
-            label: {
-              fontSize: 14,
-            },
+    option: (color) => {
+      if (isEmpty(color) || !Array.isArray(color))
+        color = [
+          "#2B5ADE",
+          "#C5D6F3",
+          "#62C664",
+          "#DDAF61",
+          "#35C9C6",
+          "#FF2C2C",
+          "#FFC72C",
+        ];
+      return {
+        tooltip,
+        legend,
+        color,
+        series: [
+          {
+            type: "pie",
+            radius: ["35%", "51%"],
+            label: { show: false },
           },
-          color: "#FFFFFF",
-        },
-      },
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        bottom: "5%",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
-      color: ["#2B5ADE", "#C5D6F3", "#62C664", "#DDAF61", "#35C9C6"],
-      series: [
-        {
-          type: "pie",
-          label: {
-            show: false,
+          {
+            name: "",
+            type: "custom",
+            coordinateSystem: "none",
+            renderItem: com.renderItem4Pie4,
+            data: [0],
           },
-          radius: ["35%", "51%"],
-        },
-        {
-          name: "",
-          type: "custom",
-          coordinateSystem: "none",
-          renderItem: com.renderItem4Pie4,
-          data: [0],
-        },
-      ],
+        ],
+      };
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(带背景圆环图)",
   },
   "p_ring_gap--d": {
     option: {
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        bottom: "5%",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
+      tooltip,
+      legend,
       color: ["#1D83FA", "#1EE7E7", "#E78C46", "#886EFF", "#FFC722"],
       series: [
         {
           type: "pie",
+          radius: ["35%", "51%"],
           label: {
             show: false,
             rich: {
@@ -145,6 +125,7 @@ export default {
                 fontSize: 20,
               },
             },
+            color: "#BAC3D4",
             formatter: "{b}\n{val| {@[1]}}",
             position: "center",
           },
@@ -154,39 +135,26 @@ export default {
               show: true,
             },
           },
-          radius: ["35%", "51%"],
           z: 10,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["26%", "60%"],
           itemStyle: {
             color: "#122752",
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
-          data: [1],
-          radius: ["26%", "60%"],
+          ...com.itemNoneEvent,
+          data: [0],
           z: 5,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["0%", "60%"],
           itemStyle: {
             color: "#081532",
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
-          data: [1],
-          radius: ["0%", "60%"],
+          ...com.itemNoneEvent,
+          data: [0],
           z: 1,
         },
         {
@@ -198,21 +166,15 @@ export default {
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(有间距圆环图)",
   },
   "p_ring_shadow--d": {
     option: {
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        bottom: "5%",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
+      tooltip,
+      legend,
       color: [
         "#3D77FF",
         "#6AB4FF",
@@ -225,6 +187,7 @@ export default {
       series: [
         {
           type: "pie",
+          radius: ["45%", "51%"],
           label: {
             show: false,
             rich: {
@@ -241,149 +204,93 @@ export default {
               show: true,
             },
           },
-          radius: ["45%", "51%"],
           z: 10,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["51%", "65%"],
           itemStyle: {
             opacity: 0.2,
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
-          radius: ["51%", "65%"],
+          ...com.itemNoneEvent,
           z: 5,
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(带阴影圆环图)",
   },
   "p_ring_shadow2--d": {
     option: {
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        bottom: "5%",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
+      tooltip,
+      legend,
       color: ["#37FFC9", "#FFE777", "#E78C46", "#886EFF", "#32A1FF"],
       series: [
         {
           type: "pie",
-          label: {
-            show: true,
-            rich: {
-              val: {
-                color: "#FFFFFF",
-              },
-            },
-            formatter: "{val| {b}} {val| {@[1]}}",
-            // position: "center",
-          },
-          padAngle: 6,
           radius: ["42%", "50%"],
+          padAngle: 6,
           z: 10,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["34%", "42%"],
           itemStyle: {
             opacity: 0.6,
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
           padAngle: 6,
-          radius: ["34%", "42%"],
+          ...com.itemNoneEvent,
           z: 5,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["26%", "34%"],
           itemStyle: {
             opacity: 0.3,
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
           padAngle: 6,
-          radius: ["26%", "34%"],
+          ...com.itemNoneEvent,
           z: 5,
         },
       ],
     },
+    type,
     dataset,
     theme,
     desc: "饼图深底(带阴影圆环图2)",
   },
   "p_ring_shadow3--d": {
     option: {
-      tooltip: com.getCommonPieTooltip("d"),
-      legend: {
-        top: "center",
-        right: "5%",
-        itemGap: 16,
-        orient: "vertical",
-        itemHeight: 12,
-        itemWidth: 12,
-        textStyle: {
-          color: "#DBEEFF",
-        },
-      },
+      tooltip,
+      legend: legend_r,
       color: ["#37FFC9", "#FFE777", "#E78C46", "#886EFF", "#32A1FF"],
       series: [
         {
           type: "pie",
+          radius: ["52%", "60%"],
           label: {
             show: false,
           },
           padAngle: 6,
-          radius: ["52%", "60%"],
           z: 10,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["40%", "52%"],
           itemStyle: {
             opacity: 0.2,
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
           padAngle: 6,
-          radius: ["40%", "52%"],
+          ...com.itemNoneEvent,
           z: 5,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
-          padAngle: 6,
           radius: ["30%", "34%"],
+          padAngle: 6,
+          ...com.itemNoneEvent,
           z: 5,
         },
         {
@@ -425,6 +332,7 @@ export default {
       series: [
         {
           type: "pie",
+          radius: ["55%", "60%"],
           label: {
             show: false,
           },
@@ -432,24 +340,17 @@ export default {
             borderRadius: 10,
           },
           padAngle: 6,
-          radius: ["55%", "60%"],
           z: 10,
         },
         {
           type: "pie",
-          label: {
-            show: false,
-          },
+          radius: ["48%", "55%"],
           itemStyle: {
             borderRadius: 10,
             opacity: 0.2,
           },
-          tooltip: { show: false },
-          emphasis: {
-            disabled: true,
-          },
           padAngle: 6,
-          radius: ["48%", "55%"],
+          ...com.itemNoneEvent,
           z: 5,
         },
         {
@@ -461,13 +362,11 @@ export default {
         },
         {
           type: "pie",
+          radius: ["41.5%", "42%"],
           itemStyle: {
             color: "#00E3EE",
           },
-          label: { show: false },
-          radius: ["41.5%", "42%"],
-          tooltip: { show: false },
-          emphasis: { disabled: true },
+          ...com.itemNoneEvent,
         },
         {
           type: "pie",
@@ -498,10 +397,8 @@ export default {
               ],
             },
           },
-          label: { show: false },
-          tooltip: { show: false },
-          emphasis: { disabled: true },
-          data: [1],
+          ...com.itemNoneEvent,
+          data: [0],
         },
       ],
     },
@@ -559,7 +456,7 @@ export default {
     option: {
       grid: com.getCommonGrid(),
       legend: {
-        orient: 'vertical',
+        orient: "vertical",
         top: "center",
         right: "5%",
         itemHeight: 12,

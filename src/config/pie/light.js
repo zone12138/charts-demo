@@ -1,16 +1,18 @@
+import * as com from "../common";
+
 const theme = "light";
-const dataset = {
-  source: [
-    ["", "营业额"],
-    ["星期一", 2500],
-    ["星期二", 8000],
-    ["星期三", 3000],
-    ["星期四", 4000],
-    ["星期五", 5000],
-    ["星期六", 5000],
-    ["星期日", 7000],
-  ],
-};
+const type = "pie"
+
+const dataset = [
+  ["", "营业额"],
+  ["星期一", 2500],
+  ["星期二", 8000],
+  ["星期三", 3000],
+  ["星期四", 4000],
+  ["星期五", 5000],
+  ["星期六", 5000],
+  ["星期日", 7000],
+];
 export default {
   "p_rose--l": {
     option: {
@@ -18,6 +20,7 @@ export default {
       legend: {
         icon: "circle",
         orient: "vertical",
+        top: "center",
         right: "6%",
       },
       color: [
@@ -48,8 +51,7 @@ export default {
           itemStyle: {
             color: "#FFFFFF",
           },
-          tooltip: { show: false },
-          emphasis: { disabled: true },
+          ...com.itemNoneEvent
         },
       ],
     },
