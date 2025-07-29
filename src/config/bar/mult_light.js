@@ -39,29 +39,6 @@ export default {
           {
             type: "bar",
             barMaxWidth: "25%",
-            renderItem: function (params, api) {
-              console.log("==========")
-              var categoryIndex = api.value(0);
-              var start = api.coord([api.value(0), 0]);
-              var end = api.coord([api.value(0), api.value(1)]);
-              var height = end[1] - start[1];
-
-              // 创建梯形
-              var shape = {
-                type: "polygon",
-                shape: {
-                  points: [
-                    [start[0] - 10, start[1]],
-                    [start[0] + 10, start[1]],
-                    [end[0] + 5, end[1]],
-                    [end[0] - 5, end[1]],
-                  ],
-                },
-                style: api.style(),
-              };
-
-              return shape;
-            },
           },
         ],
       };

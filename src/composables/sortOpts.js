@@ -1,9 +1,11 @@
+import { cloneDeep } from "lodash-es";
 import { Log } from "../utils";
 import { getCommonLinearT2B4Line as linear } from "@/config/common";
 const TYPE_LIQUIDFILL = "liquidFill";
 const TYPE_PIE = "pie";
 const TYPE_LINE = "line";
 const TYPE_BAR = "bar";
+const TYPE_LINE_DASHED = "${虚线}"
 
 /**
  * 对option进行排序
@@ -13,6 +15,7 @@ const TYPE_BAR = "bar";
  * @returns {object} 排序后的配置项
  */
 export function useSortOpts(config, color, dataset = [[]]) {
+  dataset = cloneDeep(dataset);
   try {
     let { option, needCalcMax, type, isMult } = config;
     if (typeof option === "function") {
@@ -21,15 +24,15 @@ export function useSortOpts(config, color, dataset = [[]]) {
       // 特殊处理折线图和柱状图（因为柱状图和折线图会存在多组数据的情况，即多series的情况）
       if ((type === TYPE_LINE || type === TYPE_BAR) && isMult) {
         let len = dataset[0]?.length;
-        const initialSeries = [...option.series];
+        const initialSeries = option.series;
         const initialSeriesLen = initialSeries.length;
         // 当数据集长度大于初始series长度+1（因为第一列是x轴的数据，所以要加1）时，即多组数据时，需要复制series（一般都是柱状图和折线图）
         while (len > initialSeriesLen + 1) {
-          option.series = [...option.series, ...initialSeries];
+          option.series = [...option.series, ...cloneDeep(initialSeries)];
           len -= initialSeriesLen;
         }
+        // 排序（主要用于堆叠，相同的stack将按顺序排列）
         const hasStack = option.series.some((item) => "stack" in item);
-        // 排序（主要用于堆叠）
         if (hasStack) {
           option.series = option.series.sort((a, b) => {
             return String(a.stack).localeCompare(String(b.stack));
@@ -37,11 +40,25 @@ export function useSortOpts(config, color, dataset = [[]]) {
         }
       }
 
+      // 特殊处理折线图（折线图使用areaStyle时，颜色具有规律性）
       if (type === TYPE_LINE) {
-        option.series.forEach((item, index) => {
+        const nameList = dataset[0]?.slice(1);
+        option.series = option.series.map((item, index) => {
           if ("areaStyle" in item) {
-            item.areaStyle.color = linear(option.color[index] ?? "#ff0000");
+            const color = option.color[index] ?? "#ff0000";
+            item.areaStyle.color = linear(color);
           }
+          if (nameList?.[index]) {
+            if (String(nameList[index]).startsWith(TYPE_LINE_DASHED)) {
+              dataset[0][index + 1] = String(nameList[index]).replace(
+                TYPE_LINE_DASHED,
+                ""
+              );
+              if (!("lineStyle" in item)) item.lineStyle = {};
+              item.lineStyle.type = "dashed";
+            }
+          }
+          return item;
         });
       }
 
@@ -87,6 +104,14 @@ export function useSortOpts(config, color, dataset = [[]]) {
     return { ...option, dataset: { source: dataset } };
   } catch (error) {
     Log.error("useSortOpts error", error.message);
-    return { title: { text: "出错啦！！！", subtext: error.message, textStyle: { color: "#f00" }, left: "center", top: "center" } };
+    return {
+      title: {
+        text: "出错啦！！！",
+        subtext: error.message,
+        textStyle: { color: "#f00" },
+        left: "center",
+        top: "center",
+      },
+    };
   }
 }

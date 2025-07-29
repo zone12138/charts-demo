@@ -43,6 +43,19 @@ export const getCommonBarLegend = (theme) => {
 };
 
 /**
+ * 折线图通用Legend样式
+ * @param {string} theme 主题
+ */
+export const getCommonLineLegend = (theme) => {
+  return {
+    right: "4%",
+    itemHeight: 10,
+    itemWidth: 20,
+    textStyle: { color: theme === "d" ? "#CAD3E5" : "#333333" },
+  };
+};
+
+/**
  * 饼图通用Tooltip样式
  * @param {string} theme 主题
  */
@@ -97,7 +110,7 @@ export const axisLabelHide = {
   axisLabel: {
     show: false,
   },
-}
+};
 
 /**
  * 显示x轴和y轴的标签
@@ -224,7 +237,23 @@ export const getCommonLineSymbol = {
     borderColor: "#FFFFFF",
     borderWidth: 3,
   },
-}
+};
+
+/**
+ * 折线图通用Symbol样式（特殊处理：浅底的要加阴影，不然白色可能会被背景色影响）
+ */
+export const getCommonLineSymbol4Light = {
+  symbol: "circle",
+  symbolSize: 10,
+  showSymbol: false,
+  itemStyle: {
+    borderColor: "#FFFFFF",
+    borderWidth: 3,
+    shadowColor: "#A7B9C2",
+    shadowOffsetY: 3,
+    shadowBlur: 6,
+  },
+};
 
 /**
  * 创建自定义系列（饼图外部装饰）
